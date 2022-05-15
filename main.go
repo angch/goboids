@@ -96,7 +96,7 @@ func (g *BoidGame) Update() error {
 				dx := float32(other.x - b.x)
 				dy := float32(other.y - b.y)
 				d := float32(math.Sqrt(float64(dx*dx + dy*dy)))
-				if d < 50 {
+				if d < 10 {
 					if d == 0 {
 						d = 0.01
 					}
@@ -122,8 +122,34 @@ func (g *BoidGame) Update() error {
 
 		// Rule 4: Center of screen pull
 		if true {
-			b.dx += (g.center.X - b.x) * step / 2
-			b.dy += (g.center.Y - b.y) * step / 2
+			b.dx += (g.center.X - b.x) * step / 50
+			b.dy += (g.center.Y - b.y) * step / 50
+		}
+
+		// Rule 6: Bounds
+		if true {
+			if b.x+b.dx < 0 {
+				b.dx *= 0.5
+			}
+			if b.x+b.dx > screenWidth {
+				b.dx *= 0.5
+			}
+			if b.y+b.dy < 0 {
+				b.dy *= 0.5
+			}
+			if b.y+b.dy > screenHeight {
+				b.dy *= 0.5
+			}
+		}
+
+		// Rule 5: Speed limit
+		speedlimit := float32(5)
+		if true {
+			d := float32(math.Sqrt(float64(b.dx*b.dx + b.dy*b.dy)))
+			if d > speedlimit {
+				b.dx = b.dx / d * speedlimit
+				b.dy = b.dy / d * speedlimit
+			}
 		}
 
 		// Apply, and update heading and velocity
@@ -140,7 +166,7 @@ func (g *BoidGame) DrawBoid(screen *ebiten.Image, b *Boid) {
 	if b == nil {
 		return
 	}
-	var size = float32(16)
+	var size = float32(8)
 	op := &ebiten.DrawTrianglesOptions{
 		FillRule: ebiten.EvenOdd,
 	}
@@ -193,7 +219,7 @@ func main() {
 		},
 		center: vec{X: float32(screenWidth) / 2, Y: float32(screenHeight) / 2},
 	}
-	for n := 0; n < 300; n++ {
+	for n := 0; n < 50; n++ {
 		g.boids = append(g.boids, &Boid{
 			x:      float32(screenWidth)*rand.Float32()/8 + float32(screenWidth)/2,
 			y:      float32(screenHeight)*rand.Float32()/8 + float32(screenHeight)/2,
