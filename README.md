@@ -13,6 +13,10 @@ wasmserve .
 open http://localhost:8080/
 ```
 
+## In action
+
+![](goboids.gif)
+
 ## References used
 
 https://ebiten.org/examples/vector.html
