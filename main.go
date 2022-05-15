@@ -96,7 +96,7 @@ func (g *BoidGame) Update() error {
 				dx := float32(other.x - b.x)
 				dy := float32(other.y - b.y)
 				d := float32(math.Sqrt(float64(dx*dx + dy*dy)))
-				if d < 100 {
+				if d < 50 {
 					if d == 0 {
 						d = 0.01
 					}
@@ -193,10 +193,10 @@ func main() {
 		},
 		center: vec{X: float32(screenWidth) / 2, Y: float32(screenHeight) / 2},
 	}
-	for n := 0; n < 15; n++ {
+	for n := 0; n < 300; n++ {
 		g.boids = append(g.boids, &Boid{
-			x:      float32(screenWidth) * rand.Float32(),
-			y:      float32(screenHeight) * rand.Float32(),
+			x:      float32(screenWidth)*rand.Float32()/8 + float32(screenWidth)/2,
+			y:      float32(screenHeight)*rand.Float32()/8 + float32(screenHeight)/2,
 			dx:     rand.Float32()*10 - 5,
 			dy:     rand.Float32()*10 - 5,
 			r:      0,
@@ -208,7 +208,7 @@ func main() {
 		})
 	}
 
-	ebiten.SetMaxTPS(30)
+	ebiten.SetMaxTPS(60)
 
 	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Boids")
