@@ -49,6 +49,7 @@ type Boid struct {
 func (g *BoidGame) Update() error {
 	g.counter++
 	step := float32(0.01)
+	mx, my := ebiten.CursorPosition()
 
 	for _, b := range g.boids {
 		centerOfMass := vec{X: 0, Y: 0}
@@ -96,13 +97,27 @@ func (g *BoidGame) Update() error {
 				dx := float32(other.x - b.x)
 				dy := float32(other.y - b.y)
 				d := float32(math.Sqrt(float64(dx*dx + dy*dy)))
-				if d < 10 {
+				if d < 20 {
 					if d == 0 {
 						d = 0.01
 					}
 					b.dx -= dx / d
 					b.dy -= dy / d
 				}
+			}
+		}
+
+		// Rule 2.5: Avoid mouse
+		if true {
+			dx := float32(mx) - b.x
+			dy := float32(my) - b.y
+			d := float32(math.Sqrt(float64(dx*dx + dy*dy)))
+			if d < 100 {
+				if d == 0 {
+					d = 0.01
+				}
+				b.dx -= dx / d
+				b.dy -= dy / d
 			}
 		}
 
@@ -122,8 +137,8 @@ func (g *BoidGame) Update() error {
 
 		// Rule 4: Center of screen pull
 		if true {
-			b.dx += (g.center.X - b.x) * step / 50
-			b.dy += (g.center.Y - b.y) * step / 50
+			b.dx += (g.center.X - b.x) * step / 40
+			b.dy += (g.center.Y - b.y) * step / 40
 		}
 
 		// Rule 6: Bounds
@@ -223,8 +238,8 @@ func main() {
 		g.boids = append(g.boids, &Boid{
 			x:      float32(screenWidth)*rand.Float32()/8 + float32(screenWidth)/2,
 			y:      float32(screenHeight)*rand.Float32()/8 + float32(screenHeight)/2,
-			dx:     rand.Float32()*10 - 5,
-			dy:     rand.Float32()*10 - 5,
+			dx:     rand.Float32()*20 - 10,
+			dy:     rand.Float32()*20 - 10,
 			r:      0,
 			v:      0,
 			colorR: rand.Float32()/2 + 0.5,
