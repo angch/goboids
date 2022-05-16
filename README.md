@@ -1,6 +1,8 @@
 # goboids
 
-Swee Meng said he wanted to write a boids in PyGame
+Swee Meng said he wanted to write a boids in PyGame.
+
+And he did it! https://github.com/sweemeng/pygame-boids
 
 ## Running
 
