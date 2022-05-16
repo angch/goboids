@@ -19,6 +19,8 @@ open http://localhost:8080/
 
 ![](goboids.gif)
 
+See also it running in your browser here: https://angch.github.io/goboids/
+
 ## References used
 
 https://ebiten.org/examples/vector.html
