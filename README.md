@@ -23,6 +23,6 @@ See also it running in your browser here: https://angch.github.io/goboids/
 
 ## References used
 
-https://ebiten.org/examples/vector.html
-https://ebiten.org/documents/webassembly.html
+https://ebitengine.org/en/examples/vector.html
+https://ebitengine.org/en/documents/webassembly.html
 https://vergenet.net/~conrad/boids/pseudocode.html
